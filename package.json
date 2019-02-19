@@ -1,0 +1,73 @@
+{
+  "name": "run-program-adapter",
+  "display_name": "Run Program",
+  "version": "0.1.0",
+  "description": "Run a Program adapter plugin for Mozilla IoT Gateway",
+  "author": "Mozilla IoT",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint ."
+  },
+  "keywords": [
+    "mozilla",
+    "iot",
+    "adapter",
+    "run-program"
+  ],
+  "homepage": "https://github.com/mozilla-iot/run-program-adapter",
+  "license": "MPL-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mozilla-iot/run-program-adapter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mozilla-iot/run-program-adapter/issues"
+  },
+  "files": [
+    "LICENSE",
+    "SHA256SUMS",
+    "run-program.js",
+    "index.js"
+  ],
+  "dependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.0.1",
+    "eslint": "^4.19.1"
+  },
+  "moziot": {
+    "api": {
+      "min": 2,
+      "max": 2
+    },
+    "plugin": true,
+    "exec": "{nodeLoader} {path}",
+    "config": {
+      "pulses": []
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "programs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "program"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "What to call this (needs to be unique)"
+              },
+              "program": {
+                "type": "string",
+                "description": "Program to run (with arguments)"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
