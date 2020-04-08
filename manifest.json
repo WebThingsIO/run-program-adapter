@@ -1,0 +1,49 @@
+{
+  "author": "Mozilla IoT",
+  "description": "Run a Program adapter plugin for Mozilla IoT Gateway",
+  "gateway_specific_settings": {
+    "webthings": {
+      "exec": "{nodeLoader} {path}",
+      "primary_type": "adapter",
+      "strict_max_version": "*",
+      "strict_min_version": "0.10.0"
+    }
+  },
+  "homepage_url": "https://github.com/mozilla-iot/run-program-adapter",
+  "id": "run-program-adapter",
+  "license": "MPL-2.0",
+  "manifest_version": 1,
+  "name": "Run Program",
+  "options": {
+    "default": {
+      "pulses": []
+    },
+    "schema": {
+      "type": "object",
+      "properties": {
+        "programs": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "name",
+              "program"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "What to call this (needs to be unique)"
+              },
+              "program": {
+                "type": "string",
+                "description": "Program to run (with arguments)"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "short_name": "Run Program",
+  "version": "0.2.0"
+}
