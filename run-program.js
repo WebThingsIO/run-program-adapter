@@ -39,7 +39,7 @@ class RunProgramDevice extends Device {
       'program',
       {
         '@type': 'RunProgramProperty',
-        label: 'Program',
+        title: 'Program',
         type: 'string',
         readOnly: true,
       });
