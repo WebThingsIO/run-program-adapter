@@ -11,39 +11,31 @@
 
 const {Adapter, Database, Device, Property, Event} = require('gateway-addon');
 const {exec} = require('child_process');
+const manifest = require('./manifest.json');
 
 class RunProgramDevice extends Device {
   constructor(adapter, programConfig) {
     const id = `runProgram-${programConfig.name}`;
     super(adapter, id);
 
-    this.programConfig = programConfig;
     this.name = programConfig.name;
-
-    console.log('config:', this.programConfig);
+    this.command = programConfig.program;
 
     this.initRunProgram();
     this.adapter.handleDeviceAdded(this);
   }
 
-  asDict() {
-    const dict = super.asDict();
-    dict.programConfig = this.programConfig;
-    return dict;
-  }
-
   initRunProgram() {
-    this['@type'] = ['RunProgram'];
     const programProperty = new Property(
       this,
       'program',
       {
-        '@type': 'RunProgramProperty',
         title: 'Program',
         type: 'string',
         readOnly: true,
-      });
-    programProperty.value = this.programConfig.program;
+      }
+    );
+    programProperty.setCachedValue(this.command);
     this.properties.set('program', programProperty);
 
     this.addAction('run');
@@ -52,63 +44,59 @@ class RunProgramDevice extends Device {
   }
 
   performAction(action) {
-    const program = this.programConfig.program;
-    console.log(`${this.programConfig.name}: Running: ${program}`);
+    console.log(`${this.name}: Running: ${this.command}`);
 
     action.start();
 
-    return new Promise((resolve, reject) => {
-      exec(program, (err, stdout, stderr) => {
+    return new Promise((resolve) => {
+      exec(this.command, (err, stdout, stderr) => {
         stdout = stdout.replace(/\n$/, '');
         if (stdout) {
           const stdout_lines = stdout.split(/\n/g);
           for (const stdout_line of stdout_lines) {
-            console.log(`${this.programConfig.name}: ${stdout_line}`);
+            console.log(`${this.name}: ${stdout_line}`);
           }
         }
+
         stderr = stderr.replace(/\n$/, '');
         if (stderr) {
           const stderr_lines = stderr.split(/\n/g);
           for (const stderr_line of stderr_lines) {
-            console.error(`${this.programConfig.name}: ${stderr_line}`);
+            console.error(`${this.name}: ${stderr_line}`);
           }
         }
+
         if (err) {
-          const msg = `Failed to run "${program}"`;
-          console.error(msg);
-          action.finish();
-          reject(msg);
+          this.eventNotify(new Event(this, 'error'));
         } else {
-          this.eventNotify(new Event(this, 'ran'));
-          action.finish();
-          resolve();
+          this.eventNotify(new Event(this, 'success'));
         }
+
+        action.finish();
+        resolve();
       });
     });
   }
 }
 
 class RunProgramAdapter extends Adapter {
-  constructor(addonManager, manifest) {
-    super(addonManager, manifest.name, manifest.name);
+  constructor(addonManager, config) {
+    super(addonManager, manifest.id, manifest.id);
     addonManager.addAdapter(this);
 
-    for (const programConfig of manifest.moziot.config.programs) {
+    for (const programConfig of config.programs) {
       new RunProgramDevice(this, programConfig);
     }
   }
 }
 
-function loadRunProgramAdapter(addonManager, manifest, _errorCallback) {
-  // Attempt to move to new config format
-  if (Database) {
-    const db = new Database(manifest.name);
-    db.open().then(() => {
-      return db.loadConfig();
-    }).then((_config) => {
-      new RunProgramAdapter(addonManager, manifest);
-    });
-  }
+function loadRunProgramAdapter(addonManager) {
+  const db = new Database(manifest.id);
+  db.open().then(() => {
+    return db.loadConfig();
+  }).then((config) => {
+    new RunProgramAdapter(addonManager, config);
+  });
 }
 
 module.exports = loadRunProgramAdapter;

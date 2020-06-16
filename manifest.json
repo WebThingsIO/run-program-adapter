@@ -1,6 +1,6 @@
 {
   "author": "Mozilla IoT",
-  "description": "Run a Program adapter plugin for Mozilla IoT Gateway",
+  "description": "Mozilla WebThings Gateway adapter to run a user-specified program on the host.",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "{nodeLoader} {path}",
@@ -16,7 +16,7 @@
   "name": "Run Program",
   "options": {
     "default": {
-      "pulses": []
+      "programs": []
     },
     "schema": {
       "type": "object",
@@ -45,5 +45,5 @@
     }
   },
   "short_name": "Run Program",
-  "version": "0.2.0"
+  "version": "0.3.0"
 }
