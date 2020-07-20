@@ -1,18 +1,11 @@
 {
   "name": "run-program-adapter",
-  "display_name": "Run Program",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Mozilla WebThings Gateway adapter to run a user-specified program on the host.",
   "scripts": {
     "lint": "eslint ."
   },
   "main": "index.js",
-  "keywords": [
-    "mozilla",
-    "iot",
-    "adapter",
-    "run-program"
-  ],
   "homepage": "https://github.com/mozilla-iot/run-program-adapter",
   "author": "Mozilla IoT",
   "license": "MPL-2.0",
@@ -26,7 +19,7 @@
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.4.0"
+    "eslint": "^7.5.0"
   },
   "files": [
     "LICENSE",
@@ -35,41 +28,5 @@
     "index.js",
     "manifest.json",
     "run-program.js"
-  ],
-  "moziot": {
-    "api": {
-      "min": 2,
-      "max": 2
-    },
-    "plugin": true,
-    "exec": "{nodeLoader} {path}",
-    "config": {
-      "programs": []
-    },
-    "schema": {
-      "type": "object",
-      "properties": {
-        "programs": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "name",
-              "program"
-            ],
-            "properties": {
-              "name": {
-                "type": "string",
-                "description": "What to call this (needs to be unique)"
-              },
-              "program": {
-                "type": "string",
-                "description": "Program to run (with arguments)"
-              }
-            }
-          }
-        }
-      }
-    }
-  }
+  ]
 }
