@@ -1,6 +1,6 @@
 {
-  "author": "Mozilla IoT",
-  "description": "Mozilla WebThings Gateway adapter to run a user-specified program on the host.",
+  "author": "WebThingsIO",
+  "description": "WebThings Gateway adapter to run a user-specified program on the host.",
   "gateway_specific_settings": {
     "webthings": {
       "exec": "{nodeLoader} {path}",
@@ -9,7 +9,7 @@
       "strict_min_version": "0.10.0"
     }
   },
-  "homepage_url": "https://github.com/mozilla-iot/run-program-adapter",
+  "homepage_url": "https://github.com/WebThingsIO/run-program-adapter",
   "id": "run-program-adapter",
   "license": "MPL-2.0",
   "manifest_version": 1,
@@ -45,5 +45,5 @@
     }
   },
   "short_name": "Run Program",
-  "version": "0.3.1"
+  "version": "0.3.2"
 }

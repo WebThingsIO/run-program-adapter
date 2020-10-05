@@ -1,25 +1,25 @@
 {
   "name": "run-program-adapter",
-  "version": "0.3.1",
-  "description": "Mozilla WebThings Gateway adapter to run a user-specified program on the host.",
+  "version": "0.3.2",
+  "description": "WebThings Gateway adapter to run a user-specified program on the host.",
   "scripts": {
     "lint": "eslint ."
   },
   "main": "index.js",
-  "homepage": "https://github.com/mozilla-iot/run-program-adapter",
-  "author": "Mozilla IoT",
+  "homepage": "https://github.com/WebThingsIO/run-program-adapter",
+  "author": "WebThingsIO",
   "license": "MPL-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/mozilla-iot/run-program-adapter.git"
+    "url": "https://github.com/WebThingsIO/run-program-adapter.git"
   },
   "bugs": {
-    "url": "https://github.com/mozilla-iot/run-program-adapter/issues"
+    "url": "https://github.com/WebThingsIO/run-program-adapter/issues"
   },
   "dependencies": {},
   "devDependencies": {
     "babel-eslint": "^10.1.0",
-    "eslint": "^7.5.0"
+    "eslint": "^7.10.0"
   },
   "files": [
     "LICENSE",
